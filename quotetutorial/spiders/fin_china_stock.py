@@ -59,8 +59,6 @@ class FinChinaStockSpider(scrapy.Spider):
             yield scrapy.Request(url=data[0], callback=self.parse_article, meta={'item':item}, dont_filter=True)
 
     def parse_article(self, response):
-        # TODO 加一个ImageItem进来获取原始图片地址，并转换，保存新旧数据
-
         item = response.meta['item']
         # 正则提取css选择的日期内容
         pub_time = response.css('.fl.time2::text').re_first('(\d{4}.*?:\d{2})')
@@ -69,21 +67,8 @@ class FinChinaStockSpider(scrapy.Spider):
 
         # TODO 在pipeline里面处理list格式image_url并存入数据库
         item['ori_image_url'] = response.css('.navp.c p img::attr(src)').extract()
-        item['oss_image_url'] = ['Multiple_Nothing']
-
-        '''# TODO 添加image获取，下载上传oss，转换并储存
-        ori_image_urls = response.css('.navp.c p').re('src="(.*?)">')
-        oss_image_urls = []
-        for j in len(ori_image_urls):
-            ImageItems = ImageItem()
-            ImageItems['ori_image_url'] = ori_image_urls[j]
-            # TODO 这里有个下载储存并上传到oss，最终返回oss地址的动作
-            ImageItems['oss_image_url'] = None
-            oss_image_urls.append()'''
 
         contents = ''.join(contents)
-        # TODO 写个替换老网址的for loop (replace函数，考虑一次替换)
-
         item['pub_time'] = pub_time
         item['origin'] = origin
         item['contents'] = contents

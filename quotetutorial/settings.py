@@ -78,6 +78,8 @@ ITEM_PIPELINES = {
     #'quotetutorial.pipelines.MongoPipeline': 400,
     #'quotetutorial.pipelines.MysqlPipeline': 500,
     'quotetutorial.pipelines.NewsMysqlPipeline': 534,
+    ### 这里imgae的pipeline在后面是因为534索引自动去重报错直接让540无法运行，保证image数据不重复。
+    'quotetutorial.pipelines.ImagesMysqlPipeline': 540,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
