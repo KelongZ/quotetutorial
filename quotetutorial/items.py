@@ -22,6 +22,5 @@ class NewsItem(scrapy.Item):
     origin = scrapy.Field()
     contents = scrapy.Field()
 
-class ImageItem(scrapy.Item):
     ori_image_url = scrapy.Field()
     oss_image_url = scrapy.Field()

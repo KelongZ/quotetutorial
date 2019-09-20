@@ -4,7 +4,6 @@ import re
 from urllib.parse import urlencode
 
 from quotetutorial.items import NewsItem
-from quotetutorial.items import ImageItem
 
 class FinChinaStockSpider(scrapy.Spider):
     name = 'fin_china_stock'
@@ -14,7 +13,7 @@ class FinChinaStockSpider(scrapy.Spider):
 
     first_url = 'http://finance.china.com.cn/stock/'
     more_urls = []
-    for i in range(1,3):
+    for i in range(1,2):
         data = {
             'callback': 'jQuery111109070254808521516_1568796896902',
             'cnl': 'stock',
@@ -68,8 +67,12 @@ class FinChinaStockSpider(scrapy.Spider):
         origin = response.css('.fl.time2 a::text').extract_first()
         contents = response.css('.navp.c p').extract()
 
+        # TODO 在pipeline里面处理list格式image_url并存入数据库
+        item['ori_image_url'] = response.css('.navp.c p img::attr(src)').extract()
+        item['oss_image_url'] = ['Multiple_Nothing']
+
         '''# TODO 添加image获取，下载上传oss，转换并储存
-        ori_image_urls = response.css('.navp.c p').re('<img src="(.*?)">')
+        ori_image_urls = response.css('.navp.c p').re('src="(.*?)">')
         oss_image_urls = []
         for j in len(ori_image_urls):
             ImageItems = ImageItem()
