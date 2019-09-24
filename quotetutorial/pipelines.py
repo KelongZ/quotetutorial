@@ -76,6 +76,7 @@ class  ImagesMysqlPipeline(object):
         if item['ori_image_url']:
             oss_image_urls = []
             for i in range(len(item['ori_image_url'])):
+                # 随机数字字母字符串生成，长度为32
                 ran_str = ''.join(random.sample(string.ascii_letters + string.digits, 32))
                 ori_image_url = item['ori_image_url'][i]
                 oss_image_url = 'https://idtcdn.oss-cn-hangzhou.aliyuncs.com/BaiKe/News_Image/' + ran_str + '.jpg'
